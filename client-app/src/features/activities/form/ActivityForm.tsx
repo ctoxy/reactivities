@@ -6,6 +6,11 @@ import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
 import { v4 as uuid } from 'uuid';
 import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
+import MyTextInput from '../../../app/common/form/MyTextInput';
+import MyTextArea from '../../../app/common/form/MyTextArea';
+import MySelectInput from '../../../app/common/form/MySelectInput';
+import { categoryOptions } from '../../../app/common/options/categoryOptions';
 
 export default observer(function ActivityForm() {
     const history = useHistory();
@@ -23,6 +28,15 @@ export default observer(function ActivityForm() {
         city: '',
         venue: ''
     });
+
+    const validationSchema = Yup.object({
+        title: Yup.string().required('The activity title is required'),
+        description: Yup.string().required('The activity description is required'),
+        category: Yup.string().required(),
+        date: Yup.string().required('Date is required').nullable(),
+        venue: Yup.string().required(),
+        city: Yup.string().required(),
+    })
 
     useEffect(() => {
         if (id) loadActivity(id).then(activity => setActivity(activity!))
@@ -49,12 +63,16 @@ export default observer(function ActivityForm() {
 
     return (
         <Segment clearing>
-            <Formik enableReinitialize initialValues={activity} onSubmit={values => console.log(values)}>
+            <Formik
+                validationSchema={validationSchema}
+                enableReinitialize
+                initialValues={activity}
+                onSubmit={values => console.log(values)}>
                 {({ handleSubmit }) => (
                     <Form className="ui form" onSubmit={handleSubmit} autoComplete='off'>
-                        <Field placeholder='Title' name='title' />
-                        <Field placeholder='Description' name='description' />
-                        <Field placeholder='Category' name='category' />
+                        <MyTextInput name='title' placeholder='Title' />
+                        <MyTextArea rows={3} placeholder='Description' name='description' />
+                        <MySelectInput options={categoryOptions} placeholder='Category' name='category' />
                         <Field type='date' placeholder='Date' name='date' />
                         <Field placeholder='City' name='city' />
                         <Field placeholder='Venue' name='venue' />
