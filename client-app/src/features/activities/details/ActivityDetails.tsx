@@ -5,10 +5,9 @@ import { Grid } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
 import ActivityDetailedChat from './ActivityDetailedChat';
-import ActivityDetailedHeader from './ActivityDetailedHeader';
 import ActivityDetailedInfo from './ActivityDetailedInfo';
 import ActivityDetailedSidebar from './ActivityDetailedSidebar';
-
+import ActivityDetailedHeader from './ActivityDetailedHeader';
 
 export default observer(function ActivityDetails() {
     const { activityStore } = useStore();
@@ -29,7 +28,7 @@ export default observer(function ActivityDetails() {
                 <ActivityDetailedChat />
             </Grid.Column>
             <Grid.Column width={6}>
-                <ActivityDetailedSidebar />
+                <ActivityDetailedSidebar activity={activity} />
             </Grid.Column>
         </Grid>
     )
