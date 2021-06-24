@@ -2,7 +2,9 @@
 
 using Application.Activities;
 using Application.Core;
+using Application.Interfaces;
 using AutoMapper;
+using Infrastructure.Security;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -38,6 +40,8 @@ namespace API.Extensions
             services.AddMediatR(typeof(List.Handler).Assembly);
             //utilisation de automapper pour correspondance des champs assembly title title api
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+            //permet d'utliser le lien many many user activité en sachant qui est le user logger
+            services.AddScoped<IUserAccessor, UserAccessor>();
 
             return services;
         }
