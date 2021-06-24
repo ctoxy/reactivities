@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Activities;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -18,7 +19,7 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new List.Query()));
         }
-        //recupération d'une activité par id
+        //recupération d'une activité par id avec l'authorisation est gérer dans le startupclass
         [HttpGet("{id}")]
         public async Task<IActionResult> GetActivity(Guid id)
         {

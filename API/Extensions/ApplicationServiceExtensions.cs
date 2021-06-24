@@ -1,4 +1,4 @@
-// centralise les appels de services pour le startup.cs
+// centralise les appels de services pour l'activités vers le starupclass
 
 using Application.Activities;
 using Application.Core;
