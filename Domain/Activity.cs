@@ -22,6 +22,8 @@ namespace Domain
         public bool IsCancelled { get; set; }
         //relation many to many activity / user le new list permet de remplir dans les requetes sinon erreur 500 car null par défaut dans 
         public ICollection<ActivityAttendee> Attendees { get; set; } = new List<ActivityAttendee>();
+        //relation many to many activity / chat
+        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
     }
 }

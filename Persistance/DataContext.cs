@@ -16,6 +16,8 @@ namespace Persistence
         public DbSet<ActivityAttendee> ActivityAttendees { get; set; }
         // creation de la db ActivityAttendee RELATION MANY MANY ENTRE USER ET PHOTO
         public DbSet<Photo> Photos { get; set; }
+        // creation de la db Comment RELATION MANY MANY ENTRE actvity et chat
+        public DbSet<Comment> Comments { get; set; }
         // MODELE DE LA CREATION ORM USER/ACTIVITIE MANY TO MANY JOINTURE
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -32,6 +34,11 @@ namespace Persistence
                 .HasOne(u => u.Activity)
                 .WithMany(a => a.Attendees)
                 .HasForeignKey(aa => aa.ActivityId);
+            // lien activit chat
+            builder.Entity<Comment>()
+                .HasOne(a => a.Activity)
+                .WithMany(c => c.Comments)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

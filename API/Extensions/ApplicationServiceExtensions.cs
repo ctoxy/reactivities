@@ -34,7 +34,12 @@ namespace API.Extensions
             {
                 opt.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
+                    policy
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        //credentials for signalr between back and front
+                        .AllowCredentials()
+                        .WithOrigins("http://localhost:3000");
                 });
             });
             //utilisation de mediator pour recuperer la liste des activiter par activites controllor api
@@ -47,6 +52,8 @@ namespace API.Extensions
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
             //permet d'utliser le service cloudinary config dans appsettingg prod
             services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
+            //services SignalR stream du tchat
+            services.AddSignalR();
 
             return services;
         }
