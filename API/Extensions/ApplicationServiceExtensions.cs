@@ -4,6 +4,7 @@ using Application.Activities;
 using Application.Core;
 using Application.Interfaces;
 using AutoMapper;
+using Infrastructure.Photos;
 using Infrastructure.Security;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +43,10 @@ namespace API.Extensions
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             //permet d'utliser le lien many many user activité en sachant qui est le user logger
             services.AddScoped<IUserAccessor, UserAccessor>();
+            //permet upload delete photo de cloudinary
+            services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+            //permet d'utliser le service cloudinary config dans appsettingg prod
+            services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
 
             return services;
         }

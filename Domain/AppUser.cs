@@ -11,5 +11,7 @@ namespace Domain
         public string Bio { get; set; }
         //relation many to many user / activity
         public ICollection<ActivityAttendee> Activities { get; set; }
+        //relation many to many user / photo
+        public ICollection<Photo> Photos { get; set; }
     }
 }

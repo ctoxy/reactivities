@@ -14,6 +14,8 @@ namespace Persistence
         public DbSet<Activity> Activities { get; set; }
         // creation de la db ActivityAttendee RELATION MANY MANY ENTRE USER ET ACTIVITY
         public DbSet<ActivityAttendee> ActivityAttendees { get; set; }
+        // creation de la db ActivityAttendee RELATION MANY MANY ENTRE USER ET PHOTO
+        public DbSet<Photo> Photos { get; set; }
         // MODELE DE LA CREATION ORM USER/ACTIVITIE MANY TO MANY JOINTURE
         protected override void OnModelCreating(ModelBuilder builder)
         {
