@@ -12,12 +12,19 @@ namespace Persistence
         }
         // creation de la db ACTIVITIES
         public DbSet<Activity> Activities { get; set; }
-        // creation de la db ActivityAttendee RELATION MANY MANY ENTRE USER ET ACTIVITY
+
+        // creation de la db ActivityAttendees RELATION MANY MANY ENTRE USER ET ACTIVITY
         public DbSet<ActivityAttendee> ActivityAttendees { get; set; }
-        // creation de la db ActivityAttendee RELATION MANY MANY ENTRE USER ET PHOTO
+
+        // creation de la db Photos RELATION MANY MANY ENTRE USER ET PHOTO
         public DbSet<Photo> Photos { get; set; }
-        // creation de la db Comment RELATION MANY MANY ENTRE actvity et chat
+
+        // creation de la db Comments RELATION MANY MANY ENTRE actvity et chat
         public DbSet<Comment> Comments { get; set; }
+
+        // creation de la db UserFollowings RELATION MANY MANY ENTRE follower et followees
+        public DbSet<UserFollowing> UserFollowings { get; set; }
+
         // MODELE DE LA CREATION ORM USER/ACTIVITIE MANY TO MANY JOINTURE
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -39,6 +46,23 @@ namespace Persistence
                 .HasOne(a => a.Activity)
                 .WithMany(c => c.Comments)
                 .OnDelete(DeleteBehavior.Cascade);
+            // lien follow followers
+            builder.Entity<UserFollowing>(b =>
+            {
+                b.HasKey(k => new { k.ObserverId, k.TargetId });
+
+                b.HasOne(o => o.Observer)
+                    .WithMany(f => f.Followings)
+                    .HasForeignKey(o => o.ObserverId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                b.HasOne(o => o.Target)
+                    .WithMany(f => f.Followers)
+                    .HasForeignKey(o => o.TargetId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+            });
         }
+
     }
 }
