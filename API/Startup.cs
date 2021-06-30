@@ -70,6 +70,9 @@ namespace API
             // app.UseHttpsRedirection();
 
             app.UseRouting();
+            // servir le build client front
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             app.UseCors("CorsPolicy");
             //place importante avant UseAuthorisation pour utilisation du service avec le token
@@ -82,6 +85,8 @@ namespace API
                 endpoints.MapControllers();
                 //appel du chat signalR
                 endpoints.MapHub<ChatHub>("/chat");
+                //appel du point de terminaison index file dans wwwroot
+                endpoints.MapFallbackToController("Index", "Fallback");
             });
         }
     }
