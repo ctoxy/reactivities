@@ -1,7 +1,5 @@
-//permet de retourner le resultat dans l'activité pour eviter les exeption ex activité inexistante 
 namespace Application.Core
 {
-    //t est un terme générique qui sera remplacer ici le cas échéant par activity 
     public class Result<T>
     {
         public bool IsSuccess { get; set; }
